@@ -7,19 +7,19 @@ export const dynamic = "force-dynamic";
 
 // GET: Fetch all students
 export async function GET() {
-  await dbConnect();
   try {
+    await dbConnect();
     const students = await Student.find({}).sort({ createdAt: -1 });
     return NextResponse.json({ success: true, data: students }, { status: 200 });
   } catch (error) {
-    return NextResponse.json({ success: false, error: error.message }, { status: 400 });
+    return NextResponse.json({ success: false, error: error.message }, { status: 500 });
   }
 }
 
 // POST: Create a new student with Zod validation
 export async function POST(request) {
-  await dbConnect();
   try {
+    await dbConnect();
     const body = await request.json();
     
     // Validate the request body against the Zod schema
@@ -36,6 +36,6 @@ export async function POST(request) {
     if (error.code === 11000) {
       return NextResponse.json({ success: false, error: "Email already exists" }, { status: 400 });
     }
-    return NextResponse.json({ success: false, error: error.message }, { status: 400 });
+    return NextResponse.json({ success: false, error: error.message }, { status: 500 });
   }
 }
