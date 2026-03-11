@@ -3,6 +3,8 @@ import dbConnect from "@/app/lib/mongodb";
 import Student from "@/app/models/Student";
 import { studentSchema } from "@/app/lib/validation";
 
+export const dynamic = "force-dynamic";
+
 // GET: Fetch a single student by ID
 export async function GET(request, { params }) {
   await dbConnect();
